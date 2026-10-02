@@ -61,6 +61,13 @@ header.top{border-bottom:1px solid var(--line);background:var(--surface)}
 .search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);stroke:var(--muted)}
 select{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
 input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--frost);outline-offset:2px}
+.secs{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;padding:4px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.sec-tab{font:600 15px/1.2 var(--f-body);white-space:nowrap;padding:11px 12px;border-radius:10px;border:0;background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;min-width:0}
+.sec-tab .n{font:500 12px/1 var(--f-mono);opacity:.75}
+.sec-tab[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.sec-tab:focus-visible{outline:2px solid var(--frost);outline-offset:2px}
+.empty .alt{margin-top:12px}
+@media (max-width:420px){.sec-tab{font-size:14px;padding:11px 6px;gap:5px}.sec-tab .n{display:none}}
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;min-width:0;flex:1 1 100%}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:none;font:500 13px/1 var(--f-body);padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
@@ -374,6 +381,7 @@ footer .wrap{padding-bottom:84px}
 
   <section class="controls" aria-label="Фильтры">
     <div class="wrap">
+      <div class="row"><div class="secs" id="secs" role="tablist" aria-label="Раздел каталога"></div></div>
       <div class="row">
         <label class="search" for="q">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -386,7 +394,7 @@ footer .wrap{padding-bottom:84px}
         </select>
       </div>
       <div class="row"><div class="chips" id="cats" role="group" aria-label="Категория"></div></div>
-      <div class="row"><div class="chips brands" id="brands" role="group" aria-label="Бренд"></div><span class="count" id="count"></span></div>
+      <div class="row"><div class="chips brands" id="brandchips" role="group" aria-label="Бренд"></div><span class="count" id="count"></span></div>
     </div>
   </section>
 
@@ -496,31 +504,42 @@ function grp(n){
 const optLabel=n=>/Chameleon/.test(n)?"Цвет Chameleon White / Carbon Black":/^Голографик/.test(n)?"Цвет «голографик»":n;
 
 /* ---------- витрина ---------- */
-const state={cat:"all",brand:"all",q:"",sort:"default"};
+const SECS={bikes:{l:"Велосипеды и рамы",c:["road","gravel","mtb","ebike","frame"]},parts:{l:"Комплектующие",c:["wheels","parts","tires"]}};
+const secOf=c=>SECS.bikes.c.includes(c)?"bikes":"parts";
+const state={sec:"bikes",cat:"all",brand:"all",q:"",sort:"default"};
 try{const s=JSON.parse(localStorage.getItem("moroz-filter")||"{}");Object.assign(state,s,{q:""})}catch(e){}
-function save(){try{localStorage.setItem("moroz-filter",JSON.stringify({cat:state.cat,brand:state.brand,sort:state.sort}))}catch(e){}}
+if(!SECS[state.sec])state.sec="bikes";if(state.cat!=="all"&&(!CATS[state.cat]||secOf(state.cat)!==state.sec))state.cat="all";
+function save(){try{localStorage.setItem("moroz-filter",JSON.stringify({sec:state.sec,cat:state.cat,brand:state.brand,sort:state.sort}))}catch(e){}}
 function chips(el,list,key){
   el.innerHTML=list.map(([v,l,n])=>`<button class="chip" data-v="${esc(v)}" aria-pressed="${state[key]===v}">${esc(l)}<span class="n">${n}</span></button>`).join("");
   el.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;state[key]=b.dataset.v;if(key==="cat")state.brand="all";save();render()};
 }
-function match(m){
+function match(m,sec=state.sec){
+  if(secOf(m.c)!==sec)return false;
   if(state.cat!=="all"&&m.c!==state.cat)return false;
   if(state.brand!=="all"&&m.b!==state.brand)return false;
   return !state.q||state.q.split(/\s+/).filter(Boolean).every(w=>m.hay.includes(w));
 }
 function render(){
-  const inCat=MODELS.filter(m=>state.cat==="all"||m.c===state.cat);
-  chips($("cats"),[["all","Всё",MODELS.length],...Object.entries(CATS).map(([k,v])=>[k,v,MODELS.filter(m=>m.c===k).length])],"cat");
+  const inSec=MODELS.filter(m=>secOf(m.c)===state.sec);
+  const st=$("secs");
+  st.innerHTML=Object.entries(SECS).map(([k,v])=>`<button class="sec-tab" role="tab" data-s="${k}" aria-selected="${state.sec===k}">${esc(v.l)}<span class="n">${MODELS.filter(m=>secOf(m.c)===k).length}</span></button>`).join("");
+  st.onclick=e=>{const b=e.target.closest(".sec-tab");if(!b||b.dataset.s===state.sec)return;state.sec=b.dataset.s;state.cat="all";state.brand="all";save();render()};
+  const inCat=inSec.filter(m=>state.cat==="all"||m.c===state.cat);
+  chips($("cats"),[["all",state.sec==="bikes"?"Все велосипеды и рамы":"Все комплектующие",inSec.length],...SECS[state.sec].c.map(k=>[k,CATS[k],MODELS.filter(m=>m.c===k).length]).filter(x=>x[2]>0)],"cat");
   const bl=brandOrder.map(b=>[b,b,inCat.filter(m=>m.b===b).length]).filter(b=>b[2]>0);
   if(state.brand!=="all"&&!bl.some(b=>b[0]===state.brand))state.brand="all";
-  chips($("brands"),[["all","Все бренды",inCat.length],...bl],"brand");
-  let list=MODELS.filter(match);
+  chips($("brandchips"),[["all","Все бренды",inCat.length],...bl],"brand");
+  let list=MODELS.filter(m=>match(m));
   if(state.sort==="default")list.sort((a,b)=>brandOrder.indexOf(a.b)-brandOrder.indexOf(b.b));
   if(state.sort==="asc")list.sort((a,b)=>a.min-b.min);
   if(state.sort==="desc")list.sort((a,b)=>b.min-a.min);
   $("count").textContent=list.length+" "+plural(list.length,["модель","модели","моделей"]);
   $("sort").value=state.sort;
-  $("grid").innerHTML=list.length?list.map(card).join(""):`<p class="empty">Ничего не нашлось. Попробуйте другой запрос или сбросьте фильтры.</p>`;
+  let empty=`<p class="empty">Ничего не нашлось. Попробуйте другой запрос или сбросьте фильтры.</p>`;
+  if(!list.length&&state.q){const o=state.sec==="bikes"?"parts":"bikes";const n=MODELS.filter(m=>secOf(m.c)===o&&(!state.q||state.q.split(/\s+/).filter(Boolean).every(w=>m.hay.includes(w)))).length;if(n)empty=`<div class="empty">В разделе «${esc(SECS[state.sec].l)}» ничего не нашлось.<div class="alt"><button class="btn" type="button" id="goOther">Показать ${n} в разделе «${esc(SECS[o].l)}»</button></div></div>`}
+  $("grid").innerHTML=list.length?list.map(card).join(""):empty;
+  const go=$("goOther");if(go)go.onclick=()=>{state.sec=state.sec==="bikes"?"parts":"bikes";state.cat="all";state.brand="all";save();render()};
 }
 function card(m){
   const v0=m.v[0];
@@ -667,7 +686,7 @@ render();
   els.forEach(el=>io.observe(el));
 })();
 
-document.querySelectorAll("[data-brand]").forEach(b=>b.addEventListener("click",()=>{state.cat="all";state.brand=b.dataset.brand;state.q="";$("q").value="";render();document.getElementById("catalog").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}));
+document.querySelectorAll("[data-brand]").forEach(b=>b.addEventListener("click",()=>{state.cat="all";state.brand=b.dataset.brand;state.sec=MODELS.some(m=>m.b===b.dataset.brand&&secOf(m.c)==="bikes")?"bikes":"parts";state.q="";$("q").value="";render();document.getElementById("catalog").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})}));
 (function(){const a=$("yoAsk");if(a)a.href="https://t.me/MorozLogisticsZ_China?text="+encodeURIComponent("Здравствуйте! Интересует продукция Yoeleo: ")})();
 const h=(location.hash.match(/^#m(\d+)$/)||[])[1];if(h&&MODELS[+h])openCfg(+h);
 </script>
