@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Каталог велосипедов · Moroz-Logistics</title>
+<meta name="description" content="Каталог Moroz-Logistics: велосипеды, рамы, колёса и компоненты под заказ из Китая. Цены в рублях с доставкой до Москвы.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#f6f6f4;--surface:#fff;--fg:#1b1d20;--muted:#5d6168;--line:#e2e2de;--accent:#d7191f;--photo:#fff;--chip:#fff;
+ --display:"Barlow Condensed","Arial Narrow",sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141517;--surface:#1c1e21;--fg:#ececea;--muted:#a3a7ad;--line:#2d3035;--accent:#ff4a4f;--chip:#1c1e21;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141517;--surface:#1c1e21;--fg:#ececea;--muted:#a3a7ad;--line:#2d3035;--accent:#ff4a4f;--chip:#1c1e21;color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:14px;line-height:1.45}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 16px 56px}
+header h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,52px);line-height:1;margin:0;letter-spacing:.01em;text-transform:uppercase}
+header h1 b{color:var(--accent)}
+header p{color:var(--muted);margin:8px 0 0;max-width:68ch}
+.contacts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--fg);background:var(--fg);color:var(--bg);border-radius:999px;padding:8px 14px;font:600 13px var(--body);text-decoration:none;cursor:pointer;min-height:38px}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn:hover{border-color:var(--accent)}
+.btn.ghost:hover{color:var(--accent)}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-top:18px;padding:12px 0 10px}
+.bar .row{display:flex;gap:8px;align-items:center}
+.search{flex:1;min-width:0;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:9px 14px;font:14px var(--body)}
+.search:focus{outline:2px solid var(--accent);outline-offset:1px}
+nav{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-top:10px;-webkit-overflow-scrolling:touch}
+nav::-webkit-scrollbar{display:none}
+nav a,.cats button{flex:none;color:var(--fg);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13px;background:var(--chip);white-space:nowrap;cursor:pointer;font-family:var(--body)}
+nav a:hover,nav a:focus-visible,.cats button:hover{border-color:var(--accent);color:var(--accent);outline:none}
+.cats{display:flex;gap:6px;flex-wrap:wrap;padding-top:8px}
+@media (max-width:640px){.cats{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.cats::-webkit-scrollbar{display:none}.cats button{flex:none}}
+.cats button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+section{margin-top:36px;scroll-margin-top:130px}
+h2{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:30px;letter-spacing:.02em;margin:0 0 4px}
+h2::before{content:"";display:inline-block;width:12px;height:12px;background:var(--accent);margin-right:10px;transform:skewX(-18deg)}
+.bsub{color:var(--muted);margin:0 0 12px;font-size:13px}
+h3{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:19px;color:var(--muted);margin:22px 0 8px;letter-spacing:.04em}
+.list{border:1px solid var(--line);border-radius:6px;background:var(--surface);overflow:hidden}
+.item{display:grid;grid-template-columns:260px 270px 1fr;border-top:1px solid var(--line)}
+.item:first-child{border-top:none}
+.item>div{padding:14px;min-width:0}
+.model{border-right:1px solid var(--line);border-left:1px solid var(--line)}
+.mname{font-family:var(--display);font-weight:700;font-size:24px;line-height:1.05;text-transform:uppercase}
+.mtype{color:var(--accent);font-weight:500;font-size:13px;margin:4px 0 8px}
+ul{margin:0;padding-left:16px}
+li{margin:2px 0}
+.fspec{font-size:13px}
+.sizes{margin-top:8px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.lbl{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--fg);font-weight:600;margin-bottom:2px}
+.more{margin-top:12px}
+.builds{display:flex;flex-direction:column}
+.b{display:grid;grid-template-columns:1fr auto;gap:2px 14px;padding:8px 0;border-top:1px dashed var(--line)}
+.b:first-child{border-top:none;padding-top:0}
+.bname{font-weight:600;font-size:15px}
+.price{font-weight:600;font-size:17px;white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
+.price.ask{font-weight:500;color:var(--muted);font-size:14px}
+.b ul{grid-column:1/-1;color:var(--muted);font-size:13px}
+.opts{grid-column:1/-1;color:var(--muted);font-size:12.5px;margin-top:2px}
+.opts b{color:var(--fg);font-weight:500}
+.from{font-size:12px;color:var(--muted);font-weight:500}
+/* carousel */
+.car{position:relative;user-select:none;-webkit-user-select:none}
+.car .frame{aspect-ratio:4/3;background:var(--photo);border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;touch-action:pan-y;border:1px solid var(--line)}
+.car img{width:100%;height:100%;object-fit:contain;display:block;cursor:zoom-in}
+.car .nav{position:absolute;top:50%;transform:translateY(-70%);width:34px;height:34px;border-radius:50%;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.92);color:#1b1d20;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.car .nav:hover{border-color:var(--accent);color:var(--accent)}
+.car .prev{left:6px}.car .next{right:6px}
+.car .cap{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);margin-top:6px;min-height:18px}
+.car .cap span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nophoto{color:var(--muted);font-size:13px;text-align:center;padding:10px}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+footer{margin-top:40px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
+footer p{margin:6px 0}
+footer .c{color:var(--fg);font-weight:500}
+/* detail */
+.dlg{position:fixed;inset:0;z-index:20;background:rgba(10,10,12,.55);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;overflow-x:hidden;padding:24px 16px;overscroll-behavior:contain}
+.dlg[hidden]{display:none}
+.panel{min-width:0;overflow:hidden;background:var(--surface);color:var(--fg);border-radius:10px;max-width:1040px;width:100%;position:relative;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.x{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--fg);font-size:22px;cursor:pointer;z-index:2}
+.dtop{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px}
+.dtop .frame{aspect-ratio:4/3}
+.thumbs{display:flex;gap:6px;overflow-x:auto;margin-top:8px;padding-bottom:4px}
+.thumbs button{flex:none;width:64px;height:48px;border:1px solid var(--line);border-radius:4px;background:#fff;padding:0;cursor:pointer;overflow:hidden}
+.thumbs button[aria-current="true"]{border:2px solid var(--accent)}
+.thumbs img{width:100%;height:100%;object-fit:contain}
+.dname::before{display:none}
+.dname{font-family:var(--display);font-weight:700;font-size:34px;line-height:1;text-transform:uppercase;margin:0 40px 6px 0}
+.dsec{margin-top:18px}
+.dsec>.lbl{margin-bottom:6px}
+.dsec ul{font-size:13.5px}
+.sel{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.sel span{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:12.5px}
+.colors{display:flex;flex-wrap:wrap;gap:6px}
+.colors button{border:1px solid var(--line);border-radius:999px;padding:4px 10px;font:12.5px var(--body);background:var(--surface);color:var(--fg);cursor:pointer}
+.colors button:hover{border-color:var(--accent)}
+.colors span{border:1px dashed var(--line);border-radius:999px;padding:4px 10px;font-size:12.5px;color:var(--muted)}
+.vt{width:100%;border-collapse:collapse;font-size:13.5px}
+.vt td{border-top:1px solid var(--line);padding:10px 8px;vertical-align:top}
+.vt tr:first-child td{border-top:none}
+.vt .price{width:1%}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:6px;-webkit-overflow-scrolling:touch}
+.geo{border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums;min-width:100%}
+.geo th,.geo td{padding:6px 8px;border-top:1px solid var(--line);text-align:right;white-space:nowrap}
+.geo th:first-child,.geo td:first-child{text-align:left;white-space:normal;min-width:180px}
+.geo thead th{border-top:none;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.note{color:var(--muted);font-size:13px;margin:8px 0 0}
+.order{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;z-index:30;font-size:13px}
+.zoom{position:fixed;inset:0;z-index:40;background:#fff;display:flex;align-items:center;justify-content:center}
+.zoom[hidden]{display:none}
+.zoom img{max-width:100%;max-height:100%;object-fit:contain}
+.zoom .car{width:100%;height:100%}
+@media (max-width:900px){
+ .item{grid-template-columns:220px 1fr}
+ .item .builds{grid-column:1/-1;border-top:1px solid var(--line)}
+ .model{border-right:none}
+}
+@media (max-width:640px){
+ .wrap{padding-top:20px}
+ .item{grid-template-columns:1fr}
+ .model{border-left:none;border-top:1px solid var(--line)}
+ .item>div{padding:12px}
+ .dtop{grid-template-columns:minmax(0,1fr);gap:14px}
+ .panel{padding:16px 14px;border-radius:0}
+ .dlg{padding:0}
+ .dname{font-size:28px}
+ section{scroll-margin-top:150px}
+}
+@media (prefers-reduced-motion:no-preference){.car img{transition:opacity .15s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <h1>Moroz-Logistics · <b>каталог</b></h1>
+ <p>Велосипеды, рамы, колёса и компоненты под заказ из Китая. Цены в рублях с доставкой до Москвы. Срок поставки — 4–5 недель, если товар есть у производителя.</p>
+ <div class="contacts">
+  <a class="btn" href="https://t.me/MorozLogisticsZ_China" target="_blank" rel="noopener">Telegram @MorozLogisticsZ_China</a>
+  <a class="btn ghost" href="tel:+79175778203">+7 917 577-82-03</a>
+  <a class="btn ghost" href="tel:+79160714317">+7 916 071-43-17</a>
+ </div>
+</header>
+<div class="bar">
+ <div class="row"><input class="search" id="q" type="search" placeholder="Поиск: модель, бренд, группа…" aria-label="Поиск по каталогу" autocomplete="off"></div>
+ <div class="cats" id="cats"></div>
+ <nav id="nav" aria-label="Бренды"></nav>
+</div>
+<main id="list"></main>
+<footer>
+ <p>Указаны конечные цены с доставкой до Москвы. Цены зависят от курса юаня и стоимости доставки — менеджер подтвердит цену и срок при заказе.</p>
+ <p>Гарантируем целостность товара, новое состояние и полную комплектность. Фото и характеристики — от производителей.</p>
+ <p class="c">Moroz-Logistics · Telegram @MorozLogisticsZ_China · +7 917 577-82-03 · +7 916 071-43-17</p>
+</footer>
+</div>
+
+<div class="dlg" id="dlg" hidden role="dialog" aria-modal="true" aria-labelledby="dname"></div>
+<div class="zoom" id="zoom" hidden></div>
+
+<script src="data.js"></script>
+<script>
+const TG="MorozLogisticsZ_China";
+const CATS={road:"Шоссе",gravel:"Гравел",mtb:"MTB",ebike:"Электро",frame:"Рамы и фреймсеты",wheels:"Колёса",parts:"Компоненты",tires:"Покрышки"};
+const BRAND_NAME={"Электро":"Электровелосипеды"};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rub=p=>p==null?"по запросу":p.toLocaleString("ru-RU").replace(/,/g," ")+" ₽";
+const src=u=>!u?"":/^(https?:|data:)/.test(u)?u:"../"+u;
+const D=window.CATALOG;
+const BRANDS=[...new Set(D.map(m=>m.b))];
+const bname=b=>BRAND_NAME[b]||b;
+const slug=b=>"b-"+b.toLowerCase().replace(/[^a-z0-9а-я]+/g,"-");
+D.forEach(m=>{
+  const seen=new Set();m.photos=[];
+  const add=(u,cap)=>{if(u&&!seen.has(u)){seen.add(u);m.photos.push({u,cap})}};
+  m.v.forEach(v=>add(v.img,v.l));
+  m.v.forEach(v=>v.cols.forEach(c=>add(c.img,c.n)));
+  const ps=m.v.map(v=>v.p).filter(p=>p!=null);m.min=ps.length?Math.min(...ps):null;
+  m.text=(m.b+" "+bname(m.b)+" "+m.n+" "+m.type+" "+CATS[m.c]+" "+m.v.map(v=>v.l+" "+v.spec.join(" ")).join(" ")).toLowerCase();
+});
+const state={q:"",cat:"all"};
+
+function carousel(m,big){
+  if(!m.photos.length)return `<div class="car"><div class="frame"><div class="nophoto">Фото по запросу</div></div></div>`;
+  const p=m.photos[0],n=m.photos.length;
+  return `<div class="car" data-id="${esc(m.id)}" data-i="0">
+    <div class="frame"><img ${big?"":'loading="lazy"'} decoding="async" src="${esc(src(p.u))}" alt="${esc(m.n+" — "+p.cap)}"></div>
+    ${n>1?`<button class="nav prev" type="button" aria-label="Предыдущее фото">‹</button><button class="nav next" type="button" aria-label="Следующее фото">›</button>`:""}
+    <div class="cap"><span>${esc(p.cap)}</span><span>${n>1?"1 / "+n:""}</span></div></div>`;
+}
+function setPhoto(car,i){
+  const m=D.find(x=>x.id===car.dataset.id);if(!m)return;
+  const n=m.photos.length;i=(i+n)%n;car.dataset.i=i;
+  const p=m.photos[i],img=car.querySelector("img");
+  img.src=src(p.u);img.alt=m.n+" — "+p.cap;
+  const c=car.querySelectorAll(".cap span");c[0].textContent=p.cap;c[1].textContent=(i+1)+" / "+n;
+  const th=car.closest(".panel")?.querySelectorAll(".thumbs button");
+  if(th&&car.closest(".dtop"))th.forEach((b,k)=>b.setAttribute("aria-current",k===i));
+}
+function common(m){
+  if(m.v.length<2)return [];
+  return m.v[0].spec.filter(s=>m.v.every(v=>v.spec.includes(s)));
+}
+function rowHTML(m){
+  const com=common(m);
+  const key=m.fs.length?m.fs:(com.length?com:m.v[0].spec).slice(0,6);
+  const sizes=m.sz||(m.sel.find(s=>/Размер/.test(s.label))?"Размеры: "+m.sel.find(s=>/Размер/.test(s.label)).vals.join(" · "):"");
+  const builds=m.v.map(v=>{
+    const own=m.v.length>1?v.spec.filter(s=>!com.includes(s)&&!m.fs.includes(s)):(m.fs.length?v.spec:[]);
+    return `<div class="b"><div class="bname">${esc(v.l)}</div><div class="price${v.p==null?" ask":""}">${rub(v.p)}</div>
+      ${own.length?`<ul>${own.slice(0,4).map(s=>`<li>${esc(s)}</li>`).join("")}</ul>`:""}
+      ${v.opts.length?`<div class="opts">Опции: ${v.opts.map(o=>`${esc(o.n)} <b>+${rub(o.p)}</b>`).join(" · ")}</div>`:""}</div>`}).join("");
+  return `<article class="item" id="${esc(m.id)}">
+    <div>${carousel(m)}</div>
+    <div class="model"><div class="mname">${esc(m.n)}</div><div class="mtype">${esc(m.type||CATS[m.c])}</div>
+      ${key.length?`<ul class="fspec">${key.map(s=>`<li>${esc(s)}</li>`).join("")}</ul>`:""}
+      ${sizes?`<div class="sizes">${esc(sizes)}</div>`:""}
+      <div class="more"><a class="btn" href="#/${encodeURIComponent(m.id)}">Подробнее</a></div></div>
+    <div class="builds">${builds}</div></article>`;
+}
+function render(){
+  const q=state.q.trim().toLowerCase();
+  const words=q.split(/\s+/).filter(Boolean);
+  const vis=D.filter(m=>(state.cat==="all"||m.c===state.cat)&&words.every(w=>m.text.includes(w)));
+  let html="";
+  BRANDS.forEach(b=>{
+    const ms=vis.filter(m=>m.b===b);if(!ms.length)return;
+    html+=`<section id="${slug(b)}"><h2>${esc(bname(b))}</h2><p class="bsub">${ms.length} ${plural(ms.length,"позиция","позиции","позиций")}</p>`;
+    const cats=[...new Set(ms.map(m=>m.c))];
+    cats.forEach(c=>{html+=(cats.length>1?`<h3>${esc(CATS[c])}</h3>`:"")+`<div class="list">${ms.filter(m=>m.c===c).map(rowHTML).join("")}</div>`});
+    html+=`</section>`;
+  });
+  $("list").innerHTML=html||`<div class="empty">Ничего не нашлось. Попробуйте другой запрос или напишите нам — подберём.</div>`;
+  const present=new Set(vis.map(m=>m.b));
+  $("nav").innerHTML=BRANDS.filter(b=>present.has(b)).map(b=>`<a href="#${slug(b)}" data-jump="${slug(b)}">${esc(bname(b))}</a>`).join("");
+}
+function plural(n,a,b,c){const m10=n%10,m100=n%100;return m10===1&&m100!==11?a:m10>=2&&m10<=4&&(m100<12||m100>14)?b:c}
+$("cats").innerHTML=`<button type="button" data-c="all" aria-pressed="true">Всё</button>`+Object.entries(CATS).filter(([k])=>D.some(m=>m.c===k)).map(([k,v])=>`<button type="button" data-c="${k}" aria-pressed="false">${v}</button>`).join("");
+$("cats").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.cat=b.dataset.c;$("cats").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));render()});
+let qt;$("q").addEventListener("input",e=>{clearTimeout(qt);qt=setTimeout(()=>{state.q=e.target.value;render()},120)});
+$("nav").addEventListener("click",e=>{const a=e.target.closest("[data-jump]");if(!a)return;e.preventDefault();document.getElementById(a.dataset.jump)?.scrollIntoView({behavior:"smooth"})});
+
+// carousel controls (list + detail + zoom)
+document.addEventListener("click",e=>{
+  const nb=e.target.closest(".car .nav");
+  if(nb){const car=nb.closest(".car");setPhoto(car,+car.dataset.i+(nb.classList.contains("next")?1:-1));return}
+  const t=e.target.closest(".thumbs button");
+  if(t){setPhoto($("dlg").querySelector(".dtop .car"),+t.dataset.i);return}
+  const cb=e.target.closest(".colors button");
+  if(cb){const car=$("dlg").querySelector(".dtop .car");const m=D.find(x=>x.id===car.dataset.id);const i=m.photos.findIndex(p=>p.u===cb.dataset.u);if(i>=0)setPhoto(car,i);return}
+  const im=e.target.closest(".car img");
+  if(im&&!e.target.closest("#zoom")){openZoom(im.closest(".car"));return}
+});
+let sx=null;
+document.addEventListener("touchstart",e=>{const f=e.target.closest(".car .frame");sx=f?[e.touches[0].clientX,e.touches[0].clientY,f]:null},{passive:true});
+document.addEventListener("touchend",e=>{if(!sx)return;const dx=e.changedTouches[0].clientX-sx[0],dy=e.changedTouches[0].clientY-sx[1];const car=sx[2].closest(".car");sx=null;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)&&car.querySelector(".nav"))setPhoto(car,+car.dataset.i+(dx<0?1:-1))},{passive:true});
+
+function openZoom(car){
+  const m=D.find(x=>x.id===car.dataset.id);if(!m)return;
+  const z=$("zoom");z.innerHTML=`<button class="x" type="button" aria-label="Закрыть">×</button>`+carousel(m,true);
+  z.hidden=false;const zc=z.querySelector(".car");zc.querySelector(".frame").style.cssText="aspect-ratio:auto;height:calc(100% - 30px);border:none";setPhoto(zc,+car.dataset.i);
+}
+$("zoom").addEventListener("click",e=>{if(e.target.closest(".x")||e.target===$("zoom")){$("zoom").hidden=true;$("zoom").innerHTML=""}});
+
+// detail
+function detailHTML(m){
+  const sel=m.sel.map(s=>`<div class="dsec"><span class="lbl">${esc(s.label)}</span><div class="sel">${s.vals.map(v=>`<span>${esc(v)}</span>`).join("")}</div></div>`).join("");
+  const cols=[];const seen=new Set();m.v.forEach(v=>v.cols.forEach(c=>{if(!seen.has(c.n)){seen.add(c.n);cols.push(c)}}));
+  const vt=m.v.map(v=>`<tr><td><div class="bname">${esc(v.l)}</div>${v.spec.length?`<ul style="color:var(--muted);margin-top:4px">${v.spec.map(s=>`<li>${esc(s)}</li>`).join("")}</ul>`:""}
+     ${v.opts.length?`<div class="opts" style="margin-top:6px">${v.opts.map(o=>`${esc(o.n)} <b>+${rub(o.p)}</b>`).join("<br>")}</div>`:""}
+     ${v.notes.length?v.notes.map(n=>`<p class="note">${esc(n)}</p>`).join(""):""}</td><td class="price${v.p==null?" ask":""}">${rub(v.p)}</td></tr>`).join("");
+  const g=m.geo;
+  const msg=encodeURIComponent(`Здравствуйте! Интересует ${m.n}. `);
+  const link=location.origin+location.pathname+"#/"+encodeURIComponent(m.id);
+  return `<div class="panel"><button class="x" type="button" aria-label="Закрыть">×</button>
+   <div class="dtop"><div>${carousel(m,true)}
+     ${m.photos.length>1?`<div class="thumbs">${m.photos.map((p,i)=>`<button type="button" data-i="${i}" aria-current="${i===0}" aria-label="${esc(p.cap)}"><img loading="lazy" src="${esc(src(p.u))}" alt=""></button>`).join("")}</div>`:""}</div>
+    <div><p class="mtype" style="margin:0 0 6px">${esc(bname(m.b))} · ${esc(CATS[m.c])}</p><h2 class="dname" id="dname">${esc(m.n)}</h2>
+     ${m.type?`<div class="mtype">${esc(m.type)}</div>`:""}
+     <div class="price" style="text-align:left;font-size:22px">${m.min==null?"Цена по запросу":(m.v.length>1?'<span class="from">от </span>':"")+rub(m.min)}</div>
+     ${m.fs.length?`<div class="dsec"><span class="lbl">Рама</span><ul>${m.fs.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div>`:""}
+     ${m.sz?`<div class="dsec"><span class="lbl">Размеры</span><div class="sizes" style="margin:0">${esc(m.sz.replace(/^Стек \/ рич, мм: /,"стек / рич, мм: "))}</div></div>`:""}
+     ${sel}
+     ${cols.length?`<div class="dsec"><span class="lbl">Цвета</span><div class="colors">${cols.map(c=>c.img?`<button type="button" data-u="${esc(c.img)}">${esc(c.n)}</button>`:`<span>${esc(c.n)}</span>`).join("")}</div></div>`:""}
+    </div></div>
+   <div class="dsec"><span class="lbl">${m.v.length>1?"Комплектации и цены":"Характеристики и цена"}</span><table class="vt">${vt}</table></div>
+   ${g?`<div class="dsec"><span class="lbl">Геометрия рамы</span><div class="tw"><table class="geo"><thead><tr><th>Размер</th>${g.sizes.map(s=>`<th>${esc(s)}</th>`).join("")}</tr></thead><tbody>${g.rows.map(r=>`<tr><td>${esc(r[0])}</td>${r[1].map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>${g.note?`<p class="note">${esc(g.note)}</p>`:""}</div>`:""}
+   ${m.notes.length?`<div class="dsec">${m.notes.map(n=>`<p class="note">${esc(n)}</p>`).join("")}</div>`:""}
+   ${m.src?`<p class="note">Официальная страница производителя: <a href="${esc(m.src)}" target="_blank" rel="noopener">${esc(m.src.replace(/^https?:\/\/(www\.)?/,""))}</a></p>`:""}
+   <div class="order"><a class="btn" href="https://t.me/${TG}?text=${msg}" target="_blank" rel="noopener">Заказать в Telegram</a>
+     <a class="btn ghost" href="tel:+79175778203">Позвонить</a>
+     <button class="btn ghost" type="button" data-copy="${esc(link)}">Скопировать ссылку</button></div>
+   <p class="note">Цена с доставкой до Москвы. Менеджер подтвердит цену по текущему курсу и срок поставки.</p></div>`;
+}
+let lastScroll=0;
+function route(){
+  const id=decodeURIComponent((location.hash.match(/^#\/(.+)$/)||[])[1]||"");
+  const m=id&&D.find(x=>x.id===id);
+  const dlg=$("dlg");
+  if(m){if(dlg.hidden)lastScroll=scrollY;dlg.innerHTML=detailHTML(m);dlg.hidden=false;dlg.scrollTop=0;document.body.style.overflow="hidden";document.title=m.n+" · Moroz-Logistics";dlg.querySelector(".x").focus({preventScroll:true})}
+  else if(!dlg.hidden){dlg.hidden=true;dlg.innerHTML="";document.body.style.overflow="";document.title="Каталог велосипедов · Moroz-Logistics";scrollTo(0,lastScroll)}
+}
+function closeDlg(){if(history.length>1&&sessionStorageSafe())history.back();else location.hash=""}
+function sessionStorageSafe(){return openedFromList}
+let openedFromList=false;
+document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#/"]');if(a)openedFromList=true});
+$("dlg").addEventListener("click",e=>{
+  if(e.target===$("dlg")||e.target.closest(".x")){if(openedFromList){openedFromList=false;history.back()}else{history.replaceState(null,"",location.pathname);route()}return}
+  const c=e.target.closest("[data-copy]");if(c){const t=c.dataset.copy;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("Ссылка скопирована"),()=>prompt("Ссылка на модель:",t))}
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){if(!$("zoom").hidden){$("zoom").hidden=true;$("zoom").innerHTML=""}else if(!$("dlg").hidden)$("dlg").querySelector(".x").click()}
+  const car=!$("zoom").hidden?$("zoom").querySelector(".car"):(!$("dlg").hidden?$("dlg").querySelector(".dtop .car"):null);
+  if(car&&car.querySelector(".nav")&&(e.key==="ArrowRight"||e.key==="ArrowLeft"))setPhoto(car,+car.dataset.i+(e.key==="ArrowRight"?1:-1));
+});
+function toast(t){let el=document.querySelector(".toast");if(!el){el=document.createElement("div");el.className="toast";el.setAttribute("role","status");document.body.appendChild(el)}el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,2500)}
+addEventListener("hashchange",route);
+render();route();
+</script>
+</body>
+</html>
