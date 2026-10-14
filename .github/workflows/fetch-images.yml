@@ -1,0 +1,20 @@
+name: Fetch catalog images
+on:
+  push:
+    paths: ['tools/fetch-images.json']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pillow
+      - run: python tools/fetch_images.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add katalog/img tools/fetch-report.json
+          git commit -m "Фото каталога: загрузка из таблицы и с сайтов производителей" || echo "nothing to commit"
+          git push
